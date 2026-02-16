@@ -12,6 +12,26 @@ export const videoType = defineType({
             validation: (rule) => rule.required(), 
         }),
         defineField({
+            name: 'collection',
+            title: 'Collection',
+            type: 'string',
+            options:  {
+                list: [
+                    { title: 'Norse Gods', value: 'norse-gods' },
+                    { title: 'Battles', value: 'battles' },
+                    { title: 'Notable Figures', value: 'notable-figures' },
+                ],
+                layout: 'radio',
+            },
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: 'excerpt',
+            title: 'Excerpt',
+            type: 'text',
+            rows: 3,
+        }),
+        defineField({
             name: 'slug',
             title: 'Slug',
             type: 'slug',
@@ -25,6 +45,11 @@ export const videoType = defineType({
             name: 'youtubeId',
             title: 'YouTube Video ID',
             type: 'string',
+        }),
+        defineField({
+            name: 'publishedAt',
+            title: 'Published At',
+            type: 'datetime',
         }),
         defineField({
             name: 'transcript',
