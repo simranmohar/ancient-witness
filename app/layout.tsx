@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 
@@ -17,8 +18,18 @@ export default function RootLayout({
       <body className="bg-[#F7F3EA] font-serif text-[#1F2328] antialiased">
         <header className="sticky top-0 z-50 border-b border-[#E3DED3] bg-[#FFFCF6]/85 shadow-sm backdrop-blur-md">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
-            <Link href="/" className="text-lg font-semibold tracking-tight">
-              Ancient Witness
+            <Link
+              href="/"
+              className="flex min-w-0 items-center gap-2 text-lg font-semibold tracking-tight"
+            >
+              <Image
+                src="/ancient-witness-logo.png"
+                alt="Ancient Witness logo"
+                width={34}
+                height={34}
+                className="h-[34px] w-[34px] shrink-0 rounded-md object-cover"
+              />
+              <span className="truncate whitespace-nowrap">Ancient Witness</span>
             </Link>
             <nav className="flex items-center gap-5">
               <Link
