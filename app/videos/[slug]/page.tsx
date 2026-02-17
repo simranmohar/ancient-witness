@@ -1,5 +1,8 @@
 import {notFound} from 'next/navigation';
 import { client } from "../../lib/sanity";
+import { PortableText } from "@portabletext/react";
+import ReactMarkdown from "react-markdown";
+
 
 const query = `*[_type == "video" && slug.current == $slug][0]{
     title,
@@ -7,7 +10,7 @@ const query = `*[_type == "video" && slug.current == $slug][0]{
     excerpt,
     youtubeId,
     publishedAt,
-    transcript,
+    articleMarkdown,
     "slug": slug.current
 }`;
 
@@ -17,7 +20,7 @@ type Video = {
     excerpt?: string;
     youtubeId?: string;
     publishedAt?: string;
-    transcript?: unknown[];
+    articleMarkdown?: string;
     slug: string;
 };
 
@@ -38,7 +41,41 @@ export default async function VideoPage(props: PageProps) {
             <p style={{opacity: 0.7}}>{video.collection}</p>
             <h1>{video.title}</h1>
             {video.excerpt ? <p>{video.excerpt}</p> : null}
-            <p style={{ fontSize: 12, opacity: 0.6 }}>Published {video.publishedAt ?? "-"}</p> 
+            {video.youtubeId ? (
+                <div style={{marginTop: 16}}>
+                    <div
+                        style={{
+                            position: "relative",
+                            paddingBottom: "56.25%", // 16:9 aspect ratio
+                            height: 0,
+                            overflow: "hidden",
+                            borderRadius: 8,
+                        }}
+                    >
+                        <iframe
+                            src={`https://youtube.com/embed/${video.youtubeId}`}
+                            title={video.title}
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                border: 0,
+                            }}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        />
+                    </div>
+                </div>
+
+            ) : null}
+            <p style={{ fontSize: 12, opacity: 0.6 }}>Published {video.publishedAt ?? "-"}</p>
+            {video.articleMarkdown ? (
+                <div style={{ marginTop: 24, lineHeight: 1.6 }}>
+                    <ReactMarkdown>{video.articleMarkdown}</ReactMarkdown>
+                </div>
+            ) : null}   
         </main>
     );
 }

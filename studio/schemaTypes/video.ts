@@ -57,6 +57,12 @@ export const videoType = defineType({
             type: 'array',
             of: [{ type: 'block' }],
         }),
+        defineField({
+            name: 'articleMarkdown',
+            title: 'Article (Markdown)',
+            type: 'text',
+            rows: 20,
+        })
     ],
 
 })
